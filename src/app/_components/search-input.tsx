@@ -10,8 +10,6 @@ const SearchInputComponent = () => {
       <Button variant="default" size="icon" className="rounded-full">
         <SearchIcon />
       </Button>
-      
-      
     </div>
   );
 };

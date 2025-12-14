@@ -1,18 +1,9 @@
 {
-  "parserOptions": {
-    "sourceType": "module",
-    "ecmaVersion": "latest"
-  },
+  "trailingComma": "es5",
+  "tabWidth": 2,
+  "semi": false,
+  "singleQuote": true,
   "plugins": [
-    "prettier-plugin-tailwindcss",
-    "simple-import-sort",
-    "import"
-  ],
-  "rules": {
-    "simple-import-sort/imports": "error",
-    "simple-import-sort/exports": "error",
-    "import/first": "error",
-    "import/newline-after-import": "error",
-    "import/no-duplicates": "error"
-  }
+    "prettier-plugin-tailwindcss"
+  ]
 }
