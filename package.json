@@ -10,8 +10,11 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@prisma/adapter-pg": "^7.1.0",
+    "@prisma/client": "^7.1.0",
     "dotenv": "^17.2.3",
     "next": "16.0.10",
+    "pg": "^8.16.3",
     "prisma": "^7.1.0",
     "react": "19.2.1",
     "react-dom": "19.2.1"
@@ -28,6 +31,7 @@
     "prettier": "^3.7.4",
     "prettier-plugin-tailwindcss": "^0.7.2",
     "tailwindcss": "^4",
+    "tsx": "^4.21.0",
     "typescript": "^5"
   }
 }
