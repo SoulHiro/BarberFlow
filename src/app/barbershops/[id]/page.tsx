@@ -5,8 +5,8 @@ import Link from 'next/link'
 import { ChevronLeft } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
-import { PhoneItem } from '@/app/_components/phone-item'
 import { ServiceItem } from '@/app/_components/service-item'
+import { PhoneItem } from '@/app/_components/phone-item'
 
 const BarbershopPage = async (props: PageProps<'/barbershops/[id]'>) => {
   const { id } = await props.params
@@ -110,7 +110,10 @@ const BarbershopPage = async (props: PageProps<'/barbershops/[id]'>) => {
           </div>
           <div className="flex w-full flex-col gap-3">
             {barbershop.services.map((service) => (
-              <ServiceItem key={service.id} service={service} />
+              <ServiceItem
+                key={service.id}
+                service={{ ...service, barbershop }}
+              />
             ))}
           </div>
         </div>
