@@ -14,6 +14,9 @@ import { Calendar } from '@/components/ui/calendar'
 import { Separator } from '@/components/ui/separator'
 import { useState } from 'react'
 import { ptBR } from 'date-fns/locale'
+import { useAction } from 'next-safe-action/hooks'
+import { createBooking } from '../_actions/create-booking'
+import { toast } from 'sonner'
 
 interface ServiceItemProps {
   service: BarbershopServices & {
@@ -46,6 +49,7 @@ const TIME_SLOTS = [
 export function ServiceItem({ service }: ServiceItemProps) {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>()
   const [selectedTime, setSelectedTime] = useState<string | undefined>()
+  const { executeAsync, isPending } = useAction(createBooking)
 
   const priceInReais = (service.priceInCents / 100).toLocaleString('pt-BR', {
     style: 'currency',
@@ -65,6 +69,29 @@ export function ServiceItem({ service }: ServiceItemProps) {
 
   const today = new Date()
   today.setHours(0, 0, 0, 0)
+
+  const handleConfirm = async () => {
+    if (!selectedTime || !selectedDate) {
+      return
+    }
+
+    const timeSplitted = selectedTime?.split(':')
+    const hours = timeSplitted[0]
+    const minutes = timeSplitted[1]
+    const date = new Date(selectedDate)
+    date.setHours(Number(hours), Number(minutes))
+
+    const result = await executeAsync({
+      serviceId: service.id,
+      date,
+    })
+    if (result.serverError || result.validationErrors) {
+      toast.error(result.validationErrors?._errors?.[0])
+    }
+    toast.success('Agendamento criado com sucesso!')
+    setSelectedDate(undefined)
+    setSelectedTime(undefined)
+  }
 
   return (
     <Sheet>
@@ -170,7 +197,8 @@ export function ServiceItem({ service }: ServiceItemProps) {
               <div className="px-5 pb-6">
                 <Button
                   className="w-full rounded-full"
-                  disabled={isConfirmDisabled}
+                  onClick={handleConfirm}
+                  disabled={isConfirmDisabled || isPending}
                 >
                   Confirmar
                 </Button>
